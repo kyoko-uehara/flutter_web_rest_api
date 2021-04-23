@@ -8,23 +8,20 @@ import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart' as xml;
 import 'package:flutter_web/special.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: MyHomePage(title: 'HTTP Requests and REST API'),
-    ),
-  );
-}
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+
+// ignore: camel_case_types
+class xmlListPage extends StatefulWidget {
+  xmlListPage({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _xmlListPageState createState() => _xmlListPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+// ignore: camel_case_types
+class _xmlListPageState extends State<xmlListPage> {
 
   List data;
 
@@ -32,15 +29,15 @@ class _MyHomePageState extends State<MyHomePage> {
   //[APIキー]e70a489f0c432b68
   Future<String> getData() async{
     //特集マスタAPI
-     var response = await http.get(
-      "http://webservice.recruit.co.jp/hotpepper/special/v1/?key=e70a489f0c432b68&special_category=SPG6"
+    var response = await http.get(
+        "http://webservice.recruit.co.jp/hotpepper/special/v1/?key=e70a489f0c432b68&special_category=SPG6"
     );
 
-     print('Response status: ${response.statusCode}');
-     print('Response body: ${response.body}');
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
 
-     return response.body;
-     //return "特集マスタ";
+    return response.body;
+    //return "特集マスタ";
 
   }
 
@@ -65,8 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return elements.map((element){
       return Special(element.findElements("code").first.text,
-          element.findElements("name").first.text
-      );
+          element.findElements("name").first.text);
     }).toList();
 
   }
@@ -77,10 +73,30 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: RaisedButton(
-          onPressed: getData,
-          child: Text("Get Data"),
+      body: Container(
+        child: FutureBuilder(
+          future: getSpecialFormJson(context),
+          builder: (context, data){
+            if(data.hasData){
+              List<Special> special = data.data;
+
+              return ListView.builder(
+                  itemCount: special.length,
+                  itemBuilder: (context,index){
+                    return ListTile(
+                      title:Text(
+                        special[index].code,
+                        style: TextStyle(fontSize: 25.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(special[index].name),
+                    );
+                  });
+            }else{
+              return Center(child: CircularProgressIndicator(),);
+            }
+          },
+
         ),
       ),
     );
