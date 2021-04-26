@@ -1,12 +1,17 @@
-[
-  {
-    "code": "LT0089",
-    "name": "食べ放題プランのあるお店",
-    "special_category": "定番おすすめ"
-  },
-  {
-    "code": "LT0090",
-    "name": "コースじゃなくても飲み放題OKなお店",
-    "special_category": "定番おすすめ"
-  }
-]
+{"results":
+{"api_version":"1.20",
+  "results_available":13,
+  "results_returned":"13",
+  "results_start":1,
+  "special":[
+  {"code":"LT0089","name":"食べ放題プランのあるお店","special_category":
+    {"code":"SPG6","name":"定番おすすめ"}},
+  {"code":"LT0090","name":"コースじゃなくても飲み放題OKなお店","special_category":
+    {"code":"SPG6","name":"定番おすすめ"}},
+  {"code":"LU0017","name":"食事メインで楽しめるお店","special_category":
+    {"code":"SPG6","name":"定番おすすめ"}},
+  {"code":"LU0011","name":"雰囲気がいいBAR","special_category":
+    {"code":"SPG6","name":"定番おすすめ"}},
+  {"code":"LZ0001","name":"サムギョプサル、サムゲタン…美味しい韓国料理を味わう！","special_category":
+    {"code":"SPG6","name":"定番おすすめ"}},
+  {"code":"LZ0002","name":"おいしく飲んで食べられるバル・ビストロ","special_category":{"code":"SPG6","name":"定番おすすめ"}},{"code":"LU0051","name":"梅酒・果実酒・カクテルの種類が豊富なお店","special_category":{"code":"SPG6","name":"定番おすすめ"}},{"code":"LU0053","name":"郷土料理・ご当地メニュー！","special_category":{"code":"SPG6","name":"定番おすすめ"}},{"code":"LY0090","name":"話題のB級グルメを味わう","special_category":{"code":"SPG6","name":"定番おすすめ"}},{"code":"LU0055","name":"地鶏・焼き鳥・焼きとんを食べたい！","special_category":{"code":"SPG6","name":"定番おすすめ"}},{"code":"LZ0005","name":"中華・アジアン・各国料理","special_category":{"code":"SPG6","name":"定番おすすめ"}},{"code":"LZ0028","name":"ハッピーアワーでオトクに楽しむ","special_category":{"code":"SPG6","name":"定番おすすめ"}},{"code":"LZ0029","name":"こだわりの絶品ラーメンのあるお店","special_category":{"code":"SPG6","name":"定番おすすめ"}}]}}

@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
+
 
 
 
 import 'package:flutter/material.dart';
+import 'results.dart';
+import 'services.dart';
 import 'package:http/http.dart' as http;
-import 'package:xml/xml.dart' as xml;
-import 'package:flutter_web/special.dart';
+
 
 void main() {
   runApp(MaterialApp(
@@ -26,63 +29,45 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  List data;
-
-  //リクルート WEBサービス https://webservice.recruit.co.jp/about.html
-  //[APIキー]e70a489f0c432b68
-  Future<String> getData() async{
-    //特集マスタAPI
-     var response = await http.get(
-      "http://webservice.recruit.co.jp/hotpepper/special/v1/?key=e70a489f0c432b68&special_category=SPG6"
-    );
-
-     print('Response status: ${response.statusCode}');
-     print('Response body: ${response.body}');
-
-     return response.body;
-     //return "特集マスタ";
-
-  }
+  List<Map<String, dynamic>>  _spcial;
+  bool _loading;
 
 
-  var  xmlResponse = http.get("http://webservice.recruit.co.jp/hotpepper/special/v1/?key=e70a489f0c432b68&special_category=SPG6");
-
-
-
-  //Jsonをlistにする
-  Future<List<Special>> getSpecialFormJson(BuildContext context)async{
-    String jsonString  = await DefaultAssetBundle.of(context).loadString("lib/apiResponse.json");
-    List<dynamic> raw = jsonDecode(jsonString);
-    return raw.map((f) => Special.fromJson(f)).toList();
-  }
-
-
-  //xmlをlistにする
-  Future<List<Special>> getSpecialFormXML(BuildContext context)async{
-    String xmlString  = await DefaultAssetBundle.of(context).loadString("lib/apiResponse.xml");
-    var raw = xml.XmlDocument.parse(xmlString);
-    var elements = raw.findAllElements("special");
-
-    return elements.map((element){
-      return Special(element.findElements("code").first.text,
-          element.findElements("name").first.text
-      );
-    }).toList();
-
+  @override
+  void initState() {
+    super.initState();
+    _loading = true;
+    Services.getSpcialData().then((data) {
+      setState(() {
+        _spcial = data;
+        _loading = false;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: RaisedButton(
-          onPressed: getData,
-          child: Text("Get Data"),
+        appBar: AppBar(
+          title: Text(widget.title),
         ),
-      ),
+        body:Container(
+          color: Colors.white,
+          child: ListView.builder(
+              itemCount: null==_spcial ? 0 : _spcial.length,
+              itemBuilder: (context, index){
+                Map<String, dynamic> special = _spcial[index];
+                return ListTile(
+                  title: Text(special['code']),
+                  subtitle: Text(special['name']),
+
+                );
+              }),
+
+        )
+
+
     );
   }
 }
+
